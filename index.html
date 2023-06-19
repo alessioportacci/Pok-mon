@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style></style>
+  </head>
+  <body>
+    <div style="background-image: url(assets/maps/001_pallet_town.png);
+    width: 384px; height: 320px;">
+    <div id="PG">
+      <img src="assets/player/pg.png" />
+    </div>
+
+    <script>
+      const player = document.getElementById("PG")
+      player.style.position = "absolute"
+      player.style.zIndex = "99999"
+      player.style.left = "8px"
+      player.style.top = "8px"
+
+      document.addEventListener("keydown", function (event) {
+        let x = parseInt(
+          player.style.top.substring(0, player.style.top.indexOf("px"))
+        )
+        let y = parseInt(
+          player.style.left.substring(0, player.style.top.indexOf("px"))
+        )
+
+        //Arrow up
+        if (event.keyCode === 38) player.style.top = x - 10 + "px"
+        //Arrow down
+        if (event.keyCode === 40) player.style.top = x + 10 + "px"
+        //Arrow Left
+        if (event.keyCode === 37) player.style.left = y - 10 + "px"
+        //Arrow Right
+        if (event.keyCode === 39) player.style.left = y + 10 + "px"
+      })
+    </script>
+  </body>
+</html>
