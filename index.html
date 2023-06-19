@@ -7,16 +7,23 @@
     <style></style>
   </head>
   <body>
-    <div style="background-image: url(assets/maps/001_pallet_town.png);
-    width: 384px; height: 320px;">
-    <div id="PG">
-      <img src="assets/player/pg.png" />
+    <div
+      style="
+        background-image: url(assets/maps/001_pallet_town.png);
+        width: 384px;
+        height: 320px;
+        z-index: -1;
+      "
+    >
+      <div id="PG">
+        <img src="assets/player/pg.png" />
+      </div>
     </div>
 
     <script>
       const player = document.getElementById("PG")
       player.style.position = "absolute"
-      player.style.zIndex = "99999"
+      player.style.zIndex = "1"
       player.style.left = "8px"
       player.style.top = "8px"
 
