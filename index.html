@@ -11,8 +11,17 @@
         width: 100vh;
         height: 100vh;
       }
+
       #container{
         margin:1em 1em;
+        padding: 0;
+      }
+      #mappa{
+        background-image: url(assets/maps/001_pallet_town.png);
+        width: 384px;
+        height: 320px;
+        position: relative;
+        z-index: -4;
       }
       #PG {
   position: absolute;
@@ -26,13 +35,8 @@
   <body>
   <div id="container">
     <div
-      style="
-        background-image: url(assets/maps/001_pallet_town.png);
-        width: 384px;
-        height: 320px;
-        position: relative;
-        z-index: -4;
-      "
+    id="mappa"
+    
     >
       <div id="PG">
         <img src="assets/player/pg.png" />
@@ -43,7 +47,7 @@
     <script>
     
 
-    const keyDict = {};
+  const keyDict = {};
 const Player = {
   el: document.getElementById("PG"),
   x: 200,
@@ -84,6 +88,16 @@ document.addEventListener('keyup', updateKeyDict);
   update();
   window.requestAnimationFrame(engine);
 }());
+
+const capireDoveSia = window.scrollY + document.getElementById('PG').getBoundingClientRect().top
+console.log(capireDoveSia);
+const cambioMappa = function(){
+  if(capireDoveSia===14){
+    document.getElementById('mappa').style.backgroundImage = "url('assets/maps/route_1.png')";
+
+  }
+}
+cambioMappa()
 
 
     </script>
