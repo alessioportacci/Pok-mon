@@ -4,46 +4,88 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style></style>
+    <style>
+      body{
+        padding: 0;
+        margin: 0;
+        width: 100vh;
+        height: 100vh;
+      }
+      #container{
+        margin:1em 1em;
+      }
+      #PG {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+}
+    </style>
   </head>
   <body>
+  <div id="container">
     <div
       style="
         background-image: url(assets/maps/001_pallet_town.png);
         width: 384px;
         height: 320px;
-        z-index: -1;
+        position: relative;
+        z-index: -4;
       "
     >
       <div id="PG">
         <img src="assets/player/pg.png" />
       </div>
     </div>
+  </div>
 
     <script>
-      const player = document.getElementById("PG")
-      player.style.position = "absolute"
-      player.style.zIndex = "1"
-      player.style.left = "8px"
-      player.style.top = "8px"
+    
 
-      document.addEventListener("keydown", function (event) {
-        let x = parseInt(
-          player.style.top.substring(0, player.style.top.indexOf("px"))
-        )
-        let y = parseInt(
-          player.style.left.substring(0, player.style.top.indexOf("px"))
-        )
+    const keyDict = {};
+const Player = {
+  el: document.getElementById("PG"),
+  x: 200,
+  y: 100,
+  speed: 1.5,
+  move() {
+    this.el.style.transform = `translate(${this.x}px, ${this.y}px)`;
+  }
+};
 
-        //Arrow up
-        if (event.keyCode === 38) player.style.top = x - 10 + "px"
-        //Arrow down
-        if (event.keyCode === 40) player.style.top = x + 10 + "px"
-        //Arrow Left
-        if (event.keyCode === 37) player.style.left = y - 10 + "px"
-        //Arrow Right
-        if (event.keyCode === 39) player.style.left = y + 10 + "px"
-      })
+const updateKeyDict = (ev) => {
+    const k = ev.code;
+    if (/^Arrow\w+/.test(k)) { // If is arrow
+      ev.preventDefault();
+      keyDict[k] = ev.type === "keydown"; // set boolean true / false
+    }
+};
+
+const update = () => {
+  // Determine move distance to account diagonal move: 1/Math.sqrt(2) = ~0.707
+  let dist =
+    keyDict.ArrowUp   && (keyDict.ArrowLeft || keyDict.ArrowRight) ||
+    keyDict.ArrowDown && (keyDict.ArrowLeft || keyDict.ArrowRight) ? 0.707 : 1;
+    
+  dist *= Player.speed;
+  
+  if (keyDict.ArrowLeft)  Player.x -= dist;
+  if (keyDict.ArrowUp)    Player.y -= dist;
+  if (keyDict.ArrowRight) Player.x += dist;
+  if (keyDict.ArrowDown)  Player.y += dist;
+  Player.move();
+}
+
+document.addEventListener('keydown', updateKeyDict);
+document.addEventListener('keyup', updateKeyDict);
+
+(function engine() {
+  update();
+  window.requestAnimationFrame(engine);
+}());
+
+
     </script>
   </body>
 </html>
